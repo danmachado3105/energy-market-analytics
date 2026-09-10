@@ -9,6 +9,8 @@ dados = pd.read_csv(
     decimal=","
 )
 
+dados["DatCompetencia"] = pd.to_datetime(dados["DatCompetencia"])
+
 print("Quantidade de linhas:", len(dados))
 print("Quantidade de colunas:", len(dados.columns))
 
@@ -47,3 +49,23 @@ mercado_por_classe = (
 )
 
 print(mercado_por_classe)
+
+print("\nValor de mercado por mês:")
+
+mercado_por_mes = (
+    dados.groupby("DatCompetencia")["VlrMercado"]
+    .sum()
+    .sort_index()
+)
+
+print(mercado_por_mes)
+
+print("\nQuantidade de registros por mês:")
+
+registros_por_mes = (
+    dados.groupby("DatCompetencia")
+    .size()
+    .sort_index()
+)
+
+print(registros_por_mes)

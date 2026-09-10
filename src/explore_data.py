@@ -69,3 +69,15 @@ registros_por_mes = (
 )
 
 print(registros_por_mes)
+
+dados_completos = dados[dados["DatCompetencia"] < "2026-07-01"]
+
+print("\nEvolução do valor de mercado - dados completos:")
+
+mercado_por_mes_completo = (
+    dados_completos.groupby("DatCompetencia")["VlrMercado"]
+    .sum()
+    .sort_index()
+)
+
+print(mercado_por_mes_completo)

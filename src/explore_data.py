@@ -81,3 +81,18 @@ mercado_por_mes_completo = (
 )
 
 print(mercado_por_mes_completo)
+
+variacao_mensal = mercado_por_mes_completo.pct_change() * 100
+
+print("\nVariação mensal do valor de mercado (%):")
+print(variacao_mensal)
+
+print("\nValor de mercado por mês e classe de consumo:")
+
+mercado_mes_classe = (
+    dados_completos
+    .groupby(["DatCompetencia", "DscClasseConsumoMercado"])["VlrMercado"]
+    .sum()
+)
+
+print(mercado_mes_classe)

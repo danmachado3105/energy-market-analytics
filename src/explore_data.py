@@ -37,3 +37,13 @@ ranking = (
 )
 
 print(ranking)
+
+print("\nValor de mercado por classe de consumo:")
+
+mercado_por_classe = (
+    dados.groupby("DscClasseConsumoMercado")["VlrMercado"]
+    .sum()
+    .sort_values(ascending=False)
+)
+
+print(mercado_por_classe)

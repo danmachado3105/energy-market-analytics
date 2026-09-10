@@ -96,3 +96,28 @@ mercado_mes_classe = (
 )
 
 print(mercado_mes_classe)
+
+tabela_mes_classe = mercado_mes_classe.unstack()
+
+print(tabela_mes_classe)
+
+participacao_mes_classe = (
+    tabela_mes_classe
+    .div(tabela_mes_classe.sum(axis=1), axis=0)
+    * 100
+)
+
+print(participacao_mes_classe)
+
+dados_industrial = dados_completos[
+    dados_completos["DscClasseConsumoMercado"] == "Industrial"
+]
+
+industrial_por_distribuidora = (
+    dados_industrial
+    .groupby("NomAgenteDistribuidora")["VlrMercado"]
+    .sum()
+    .sort_values(ascending=False)
+)
+
+print(industrial_por_distribuidora.head(15))

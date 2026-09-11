@@ -131,3 +131,56 @@ industrial_mes_distribuidora = (
 tabela_industrial = industrial_mes_distribuidora.unstack()
 
 print(tabela_industrial)
+
+queda_industrial = (
+    tabela_industrial.loc[pd.Timestamp("2026-05-01")]
+    - tabela_industrial.loc[pd.Timestamp("2026-04-01")]
+).sort_values()
+
+print("\nMaiores quedas no valor de mercado industrial:")
+print(queda_industrial.head(15))
+
+cemig_industrial = dados_completos[
+    (dados_completos["NomAgenteDistribuidora"] == "CEMIG DISTRIBUIÇÃO S.A") &
+    (dados_completos["DscClasseConsumoMercado"] == "Industrial")
+]
+
+cemig_por_tipo = (
+    cemig_industrial
+    .groupby(["DatCompetencia", "NomTipoMercado"])["VlrMercado"]
+    .sum()
+    .unstack()
+)
+
+print("\nCEMIG - Industrial por tipo de mercado:")
+print(cemig_por_tipo)
+
+cemig_regular = cemig_industrial[
+    cemig_industrial["NomTipoMercado"] == "Regular"
+]
+
+cemig_regular_tarifa = (
+    cemig_regular
+    .groupby(["DatCompetencia", "DscModalidadeTarifaria"])["VlrMercado"]
+    .sum()
+    .unstack()
+)
+
+print("\nCEMIG - Industrial - Regular por modalidade tarifária:")
+print(cemig_regular_tarifa)
+
+cemig_regular_azul_verde = cemig_regular[
+    cemig_regular["DscModalidadeTarifaria"].isin(["Azul", "Verde"])
+]
+
+cemig_subgrupo = (
+    cemig_regular_azul_verde
+    .groupby(
+        ["DatCompetencia", "DscModalidadeTarifaria", "DscSubGrupoTarifario"]
+    )["VlrMercado"]
+    .sum()
+    .unstack()
+)
+
+print("\nCEMIG - Industrial - Regular - Azul/Verde por subgrupo:")
+print(cemig_subgrupo)

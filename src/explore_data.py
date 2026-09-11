@@ -121,3 +121,13 @@ industrial_por_distribuidora = (
 )
 
 print(industrial_por_distribuidora.head(15))
+
+industrial_mes_distribuidora = (
+    dados_industrial
+    .groupby(["DatCompetencia", "NomAgenteDistribuidora"])["VlrMercado"]
+    .sum()
+)
+
+tabela_industrial = industrial_mes_distribuidora.unstack()
+
+print(tabela_industrial)

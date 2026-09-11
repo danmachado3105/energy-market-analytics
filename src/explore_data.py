@@ -184,3 +184,17 @@ cemig_subgrupo = (
 
 print("\nCEMIG - Industrial - Regular - Azul/Verde por subgrupo:")
 print(cemig_subgrupo)
+
+cemig_a2 = cemig_regular[
+    cemig_regular["DscSubGrupoTarifario"] == "A2"
+]
+
+cemig_a2_detalhe = (
+    cemig_a2
+    .groupby(["DatCompetencia", "DscDetalheMercado"])["VlrMercado"]
+    .sum()
+    .unstack()
+)
+
+print("\nCEMIG - Industrial - Regular - A2 por detalhe de mercado:")
+print(cemig_a2_detalhe)

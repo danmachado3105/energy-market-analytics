@@ -198,3 +198,5 @@ cemig_a2_detalhe = (
 
 print("\nCEMIG - Industrial - Regular - A2 por detalhe de mercado:")
 print(cemig_a2_detalhe)
+
+print(cemig_a2_detalhe.T)

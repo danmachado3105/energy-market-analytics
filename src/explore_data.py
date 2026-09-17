@@ -200,3 +200,31 @@ print("\nCEMIG - Industrial - Regular - A2 por detalhe de mercado:")
 print(cemig_a2_detalhe)
 
 print(cemig_a2_detalhe.T)
+
+cemig_a2_detalhes = (
+    cemig_a2
+    .groupby(["DatCompetencia", "DscDetalheMercado"])["VlrMercado"]
+    .sum()
+    .unstack()
+)
+
+print("\nCEMIG - Industrial - Regular - A2:")
+print(cemig_a2_detalhes.loc[
+    [pd.Timestamp("2026-04-01"), pd.Timestamp("2026-05-01")]
+].T)
+
+print(cemig_a2.columns.tolist())
+
+detalhes_contagem = (
+    cemig_a2
+    .groupby(["DatCompetencia", "DscDetalheMercado"])
+    .size()
+    .unstack()
+)
+
+print("\nQuantidade de registros por detalhe de mercado:")
+print(
+    detalhes_contagem.loc[
+        [pd.Timestamp("2026-04-01"), pd.Timestamp("2026-05-01")]
+    ].T
+)
